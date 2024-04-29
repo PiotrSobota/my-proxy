@@ -20,4 +20,6 @@ public class MyProxy {
         // TODO
         clientConnection.send(serverResponse);
     }
+
+    //w tej klasie modyfikacja tylko //todo
 }

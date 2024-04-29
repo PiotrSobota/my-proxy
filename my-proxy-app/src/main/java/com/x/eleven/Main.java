@@ -25,5 +25,10 @@ public class Main {
         // Sending Server Response [2]
         // Sending Server Response [3]
         // Sending Server Response [4]
+
+        //others
+        //  1. poprawny sequenceNumber
+        //  2. Nieprzepuszczanie odpowiedzi na internal requesty
+        // poprawny sequence number i nie przepuszczanie internal request
     }
 }
