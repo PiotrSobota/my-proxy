@@ -19,7 +19,11 @@ public class ClientConnection implements Connection {
 
     @Override
     public void send(Payload payload) {
-        responseService.processClientRequest(payload)
-                .ifPresent(loggerUtils::logServerResponse);
+        try {
+            responseService.processClientRequest(payload)
+                    .ifPresent(loggerUtils::logServerResponse);
+        } catch (IndexOutOfBoundsException e) {
+            loggerUtils.logNotExistingIndex(payload);
+        }
     }
 }

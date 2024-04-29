@@ -17,6 +17,6 @@ class ServerConnectionTest extends Specification {
         serverConnection.send(payload)
 
         then:
-        1 * dbServiceMock.insert(payload)
+        1 * dbServiceMock.set(payload)
     }
 }

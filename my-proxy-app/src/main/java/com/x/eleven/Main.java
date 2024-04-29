@@ -28,6 +28,7 @@ public class Main {
         proxy.fromServer(new ServerResponseRequest(1)); // should skip internal request
         proxy.fromServer(new ServerResponseRequest(2)); // should change sequence number to 1
         proxy.fromServer(new ServerResponseRequest(3)); // should change sequence number to 2
+        proxy.fromServer(new ServerResponseRequest(11)); // SHOULD LOG ERROR & skip but not stop sequence
         proxy.fromServer(new ServerResponseRequest(4)); // should change sequence number to 3
         proxy.fromServer(new ServerResponseRequest(5)); // should skip internal request
         proxy.fromServer(new ServerResponseRequest(6)); // shoul

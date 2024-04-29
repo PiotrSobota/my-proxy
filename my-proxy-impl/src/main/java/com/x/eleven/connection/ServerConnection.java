@@ -13,6 +13,6 @@ public class ServerConnection implements Connection {
 
     @Override
     public void send(Payload request) {
-       dbServiceMock.insert(request);
+        dbServiceMock.set(request);
     }
 }

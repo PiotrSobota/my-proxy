@@ -7,16 +7,11 @@ import java.util.LinkedHashMap;
 
 public class DbServiceSimpleMock {
 
-    LinkedHashMap<String, Request> payloads = new LinkedHashMap<>();
+    private final LinkedHashMap<String, Request> payloads = new LinkedHashMap<>();
 
-    public void insert(Payload payload) {
+    public void set(Payload payload) {
         Request request = (Request) payload;
-
-        if (!payloads.containsKey(request.getRequestId())) {
-            payloads.put(request.getRequestId(), request);
-        } else {
-            throw new IllegalArgumentException("Duplicated key, not allowed for insert method");
-        }
+        payloads.put(request.getRequestId(), request);
     }
 
     public Request getByIndex(int index) {
