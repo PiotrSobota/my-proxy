@@ -4,9 +4,9 @@ import com.x.eleven.dbmock.DbServiceSimpleMock;
 import com.x.eleven.payload.Payload;
 import com.x.eleven.payload.requests.Request;
 import com.x.eleven.payload.requests.ServerResponseRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class ResponseProcessingService {
 
@@ -29,10 +29,8 @@ public class ResponseProcessingService {
     }
 
     private List<Request> collectRequestsBelowIndex(DbServiceSimpleMock dbServiceMock, int index) {
-        List<Request> valuesToIndex = new ArrayList<>();
-        for (int i = 0; i <= index; i++) {
-            valuesToIndex.add(dbServiceMock.getByIndex(i));
-        }
-        return valuesToIndex;
+        return IntStream.rangeClosed(0, index)
+                .mapToObj(dbServiceMock::getByIndex)
+                .toList();
     }
 }
