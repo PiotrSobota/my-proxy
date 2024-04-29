@@ -15,7 +15,7 @@ public class ClientRequestCounterService {
     public Optional<Long> countClientRequests(DbServiceSimpleMock dbServiceMock, List<Request> requestsBelowIndex,
             int searchedIndex) {
         if (requestsBelowIndex.get(searchedIndex) instanceof ClientRequest clientRequest) {
-            Long processedClientRequestsCount = 0L;
+            Long processedClientRequestsCount = 1L;
             for (int i = 0; i < searchedIndex; i++) {
                 Request request = dbServiceMock.getByIndex(i);
                 if (request instanceof ClientRequest) {

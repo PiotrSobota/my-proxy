@@ -23,7 +23,9 @@ public class ResponseProcessingService {
         int searchedIndex = ((ServerResponseRequest) responseRequest).getIndex();
         List<Request> requestsToIndex = collectRequestsBelowIndex(dbServiceMock, searchedIndex);
         // Could have additional processes, but now only count is needed
-        return requestCounterService.countClientRequests(dbServiceMock, requestsToIndex, searchedIndex);
+        return requestCounterService
+                .countClientRequests(dbServiceMock, requestsToIndex, searchedIndex)
+                .map(clientRequestsCount -> clientRequestsCount - 1);
     }
 
     private List<Request> collectRequestsBelowIndex(DbServiceSimpleMock dbServiceMock, int index) {

@@ -3,19 +3,17 @@ package com.x.eleven;
 import com.x.eleven.connection.ClientConnection;
 import com.x.eleven.connection.ServerConnection;
 import com.x.eleven.dbmock.DbServiceSimpleMock;
+import com.x.eleven.logger.LoggerUtils;
 import com.x.eleven.payload.requests.ClientRequest;
 import com.x.eleven.payload.requests.InternalRequest;
 import com.x.eleven.payload.requests.ServerResponseRequest;
 import com.x.eleven.services.ClientRequestCounterService;
+import com.x.eleven.services.ResponseProcessingService;
 
 public class Main {
 
     public static void main(String[] args) {
-        DbServiceSimpleMock dbServiceMock = new DbServiceSimpleMock();
-        ClientRequestCounterService requestCounterService = new ClientRequestCounterService();
-        ServerConnection serverConnection = new ServerConnection(dbServiceMock);
-        ClientConnection clientConnection = new ClientConnection(dbServiceMock, requestCounterService);
-        MyProxyService proxy = new MyProxyService(serverConnection, clientConnection);
+        MyProxyService proxy = getMyProxyService();
 
         System.out.println("Application started");
         proxy.fromClient(new ClientRequest("request1", 999888111L));
@@ -40,5 +38,16 @@ public class Main {
         // Sending Server Response [2]
         // Sending Server Response [3]
         // Sending Server Response [4]
+    }
+
+    private static MyProxyService getMyProxyService() {
+        LoggerUtils loggerUtils = new LoggerUtils();
+        DbServiceSimpleMock dbServiceMock = new DbServiceSimpleMock();
+        ClientRequestCounterService requestCounterService = new ClientRequestCounterService();
+        ResponseProcessingService responseService = new ResponseProcessingService(requestCounterService, dbServiceMock);
+
+        ServerConnection serverConnection = new ServerConnection(dbServiceMock);
+        ClientConnection clientConnection = new ClientConnection(responseService, loggerUtils);
+        return new MyProxyService(serverConnection, clientConnection);
     }
 }
