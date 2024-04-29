@@ -18,10 +18,6 @@ public abstract class Request implements Payload {
         return requestId;
     }
 
-    public enum Source {
-        CLIENT, INTERNAL
-    }
-
     @Override
     public String toString() {
         return "Request{" +
@@ -29,5 +25,9 @@ public abstract class Request implements Payload {
                 ", timestamp=" + timestamp +
                 ", source=" + source +
                 '}';
+    }
+
+    public enum Source {
+        CLIENT, INTERNAL
     }
 }
