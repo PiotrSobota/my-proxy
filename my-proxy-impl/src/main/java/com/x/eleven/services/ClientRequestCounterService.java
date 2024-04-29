@@ -3,7 +3,6 @@ package com.x.eleven.services;
 import com.x.eleven.dbmock.DbServiceSimpleMock;
 import com.x.eleven.payload.requests.ClientRequest;
 import com.x.eleven.payload.requests.Request;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -28,13 +27,5 @@ public class ClientRequestCounterService {
         } else {
             return Optional.empty();
         }
-    }
-
-    public List<Request> collectRequestsBelowIndex(DbServiceSimpleMock dbServiceMock, int index) {
-        List<Request> valuesToIndex = new ArrayList<>();
-        for (int i = 0; i <= index; i++) {
-            valuesToIndex.add(dbServiceMock.getByIndex(i));
-        }
-        return valuesToIndex;
     }
 }
