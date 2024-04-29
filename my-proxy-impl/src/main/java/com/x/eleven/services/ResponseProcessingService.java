@@ -19,7 +19,7 @@ public class ResponseProcessingService {
         this.dbServiceMock = dbServiceMock;
     }
 
-    public Optional<Long> processClientRequest(Payload responseRequest) {
+    public Optional<Long> processClientRequest(Payload responseRequest) throws IndexOutOfBoundsException {
         int searchedIndex = ((ServerResponseRequest) responseRequest).getIndex();
         List<Request> requestsToIndex = collectRequestsBelowIndex(dbServiceMock, searchedIndex);
         // Could have additional processes, but now only count is needed
@@ -28,7 +28,8 @@ public class ResponseProcessingService {
                 .map(clientRequestsCount -> clientRequestsCount - 1);
     }
 
-    private List<Request> collectRequestsBelowIndex(DbServiceSimpleMock dbServiceMock, int index) {
+    private List<Request> collectRequestsBelowIndex(DbServiceSimpleMock dbServiceMock, int index)
+            throws IndexOutOfBoundsException {
         return IntStream.rangeClosed(0, index)
                 .mapToObj(dbServiceMock::getByIndex)
                 .toList();

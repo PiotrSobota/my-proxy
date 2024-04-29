@@ -1,8 +1,8 @@
 package com.x.eleven.connection
 
-
 import com.x.eleven.logger.LoggerUtils
 import com.x.eleven.payload.Payload
+import com.x.eleven.payload.requests.ServerResponseRequest
 import com.x.eleven.services.ResponseProcessingService
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -30,5 +30,19 @@ class ClientConnectionTest extends Specification {
         processingResult        || loggingExecutionsCount
         Optional.ofNullable(4L) || 1
         Optional.empty()        || 0
+    }
+
+    def 'should handle IndexOutOfBoundException'() {
+        given:
+        ServerResponseRequest payload = Mock()
+        def clientRequestsIndex = 4L
+
+        when:
+        clientConnection.send(payload)
+
+        then:
+        1 * responseService.processClientRequest(payload) >> { throw new IndexOutOfBoundsException() }
+        0 * loggerUtils.logServerResponse(clientRequestsIndex)
+        1 * loggerUtils.logNotExistingIndex(payload)
     }
 }
