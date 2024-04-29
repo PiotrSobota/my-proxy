@@ -1,6 +1,7 @@
 package com.x.eleven.services
 
 import com.x.eleven.dbmock.DbServiceSimpleMock
+import com.x.eleven.logger.LoggerUtils
 import com.x.eleven.payload.requests.ClientRequest
 import com.x.eleven.payload.requests.InternalRequest
 import spock.lang.Specification
@@ -8,7 +9,9 @@ import spock.lang.Unroll
 
 class ClientRequestCounterServiceTest extends Specification {
 
-    ClientRequestCounterService counterService = new ClientRequestCounterService()
+    LoggerUtils loggerUtils = Mock()
+
+    ClientRequestCounterService counterService = new ClientRequestCounterService(loggerUtils)
 
     ClientRequest clientRequest1 = Mock()
     ClientRequest clientRequest2 = Mock()
@@ -34,6 +37,7 @@ class ClientRequestCounterServiceTest extends Specification {
 
         then:
         result == Optional.of(expectedResult)
+        1 * loggerUtils.logClientRequestDescription(requestsBelowIndex.get(searchedIndex))
 
         where:
         searchedIndex || expectedResult
@@ -48,6 +52,7 @@ class ClientRequestCounterServiceTest extends Specification {
 
         then:
         result.isEmpty()
+        0 * loggerUtils.logClientRequestDescription(_)
 
         where:
         searchedIndex << [0, 2, 4]

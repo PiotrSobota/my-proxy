@@ -43,7 +43,7 @@ public class Main {
     private static MyProxyService getMyProxyService() {
         LoggerUtils loggerUtils = new LoggerUtils();
         DbServiceSimpleMock dbServiceMock = new DbServiceSimpleMock();
-        ClientRequestCounterService requestCounterService = new ClientRequestCounterService();
+        ClientRequestCounterService requestCounterService = new ClientRequestCounterService(loggerUtils);
         ResponseProcessingService responseService = new ResponseProcessingService(requestCounterService, dbServiceMock);
 
         ServerConnection serverConnection = new ServerConnection(dbServiceMock);
